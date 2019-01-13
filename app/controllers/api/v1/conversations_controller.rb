@@ -29,11 +29,18 @@ class Api::V1::ConversationsController < ApplicationController
     render json: @conversations
   end
 
+  def show
+    @conversation = Conversation.find(params[:id])
+    render json: @conversation
+  end
+
   def create
     if Conversation.between(params[:sender_id], params[:recipient_id]).present?
-      @conversation = Conversation.between(params[:sender_id], params[:recipient_id]).first
+      @conversation = Conversation.between(params[:sender_id], params[:recipient_id])
+      render json: @conversation
     else
       @conversation = Conversation.create!(conversation_params)
+      render json: { conversation: ConversationSerializer.new(@conversation) }, status: :created
     end
   end
 
@@ -42,5 +49,9 @@ class Api::V1::ConversationsController < ApplicationController
   def conversation_params
     params.permit(:sender_id, :recipient_id)
   end
+
+  # def find_conversation
+  #
+  # end
 
 end
