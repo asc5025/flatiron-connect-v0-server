@@ -37,6 +37,7 @@ class Api::V1::ConversationsController < ApplicationController
   def create
     if Conversation.between(params[:sender_id], params[:recipient_id]).present?
       @conversation = Conversation.between(params[:sender_id], params[:recipient_id])
+      # @message = Message.create(message_params)
       render json: @conversation
     else
       @conversation = Conversation.create!(conversation_params)
@@ -49,6 +50,10 @@ class Api::V1::ConversationsController < ApplicationController
   def conversation_params
     params.permit(:sender_id, :recipient_id)
   end
+
+  # def message_params
+  #   params.permit(:content, :user_id)
+  # end
 
   # def find_conversation
   #
