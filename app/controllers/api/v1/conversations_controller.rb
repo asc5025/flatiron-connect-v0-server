@@ -31,6 +31,8 @@ class Api::V1::ConversationsController < ApplicationController
 
   def show
     @conversation = Conversation.find(params[:id])
+    # @sender = User.find_by(id: @conversation.sender_id)
+    # @recipient = User.find_by(id: @conversation.recipient_id)
     render json: @conversation
   end
 
