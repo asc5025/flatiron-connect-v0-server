@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :authorized, only: %i[index create update]
-  before_action :find_user, only: [:update]
+  before_action :find_user, only: %i[update]
 
   def index
     @users = User.all
@@ -10,6 +10,18 @@ class Api::V1::UsersController < ApplicationController
   def profile
     render json: { user: UserSerializer.new(current_user) }, status: :accepted
   end
+
+  def convos
+    @user = current_user
+    @user.conversations
+    render json: @user.conversations
+  end
+
+  # def convos
+  #   byebug
+  #   @user = @user.conversations
+  #   render json: @user
+  # end
 
   def create
     @user = User.create(user_params)
@@ -28,10 +40,10 @@ class Api::V1::UsersController < ApplicationController
 
 
   private
-
-  def find_user
-    @user = User.find(params[:id])
-  end
+  #
+  # def find_user
+  #   @user = User.find(params[:id])
+  # end
 
   def user_params
     params.require(:user).permit(:email, :password, :full_name, :img_url, :current_company, :current_industry, :current_position)

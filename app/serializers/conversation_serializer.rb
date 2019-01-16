@@ -1,5 +1,5 @@
 class ConversationSerializer < ActiveModel::Serializer
-  attributes :id, :sender_id, :recipient_id, :messages
+  attributes :id, :messages, :sender_id, :recipient_id
   has_many :messages
   # belongs_to :user
   belongs_to :sender, :foreign_key => :sender_id, class_name: "User"

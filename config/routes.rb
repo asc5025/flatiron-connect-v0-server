@@ -6,8 +6,10 @@ Rails.application.routes.draw do
       resources :conversations, only: %i[index show create] do
         resources :messages, only: %i[index create]
       end
+      post '/convos/msg', to: 'conversations#custom'
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
+      get 'user/convos', to: 'users#convos'
     end
   end
 end

@@ -1,32 +1,31 @@
 class Api::V1::ConversationsController < ApplicationController
  skip_before_action :authorized
 
-#   def index
-#     @users = User.all
-#     @conversations = Conversation.all
-#   end
-#
-#   def create
-#     byebug
-#     if Conversation.between(params[:sender_id],params[:recipient_id]).present?
-#       @conversation = Conversation.between(params[:sender_id], params[:recipient_id]).first
-#     else
-#       @conversation = Conversation.create!(conversation_params)
-#     end
-#   end
-#
-#   private
-#
-#   def conversation_params
-#     params.permit(:sender_id, :recipient_id)
-#   end
-# end
-
   def index
+    # byebug
     @conversations = Conversation.all
+    # @conversations = Conversation.select do |convo|
+    #   convo.messages.select do |m|
+    #     m.sender.id == current_user.id || m.recipient.id == current_user.id
+    #   end
+    # end
     # @conversations = Conversation.where("sender_id = ? OR recipient_id = ?", current_user.id, current_user.id)
     # @users = User.where.not(id: current_user.id)
     render json: @conversations
+  end
+
+  def custom
+    # byebug
+    find_conversation
+    # @message = @conversation.messages.new(message_params)
+    @message = Message.new(message_params)
+    # byebug
+    @message.conversation_id = @conversation.id
+    # @new_message = Message.create(message_params)
+
+    @message.save
+    # byebug
+    render json: @message
   end
 
   def show
@@ -36,21 +35,37 @@ class Api::V1::ConversationsController < ApplicationController
     render json: @conversation
   end
 
-  def create
-    if Conversation.between(params[:sender_id], params[:recipient_id]).present?
-      @conversation = Conversation.between(params[:sender_id], params[:recipient_id])
-      # @message = Message.create(message_params)
-      render json: @conversation
-    else
-      @conversation = Conversation.create!(conversation_params)
-      render json: { conversation: ConversationSerializer.new(@conversation) }, status: :created
-    end
-  end
+  # def create
+  #   if Conversation.between(params[:sender_id], params[:recipient_id]).present?
+  #     @conversation = Conversation.between(params[:sender_id], params[:recipient_id])
+  #     # @message = Message.create(message_params)
+  #     render json: @conversation
+  #   else
+  #     @conversation = Conversation.create!(conversation_params)
+  #     render json: { conversation: ConversationSerializer.new(@conversation) }, status: :created
+  #   end
+  # end
 
   private
 
+
+  def find_conversation
+    # if Conversation.between(params[:sender_id], params[:recipient_id]).present?
+    # if Conversation.where(sender_id: params[:message][:sender_id], recipient_id: params[:message][:recipient_id]).present?
+    if Conversation.between(params.require(:message)[:sender_id], params.require(:message)[:recipient_id]).present?
+      @conversation = Conversation.between(params.require(:message)[:sender_id], params.require(:message)[:recipient_id])[0]
+    else
+      @conversation = Conversation.create!(sender_id: params[:message][:sender_id], recipient_id: params[:message][:recipient_id])
+      # @conversation = Conversation.create!(sender_id: params[:message][:sender_id], recipient_id: params[:message][:recipient_id])
+    end
+  end
+
   def conversation_params
     params.permit(:sender_id, :recipient_id)
+  end
+
+  def message_params
+    params.require(:message).permit(:content, :sender_id, :recipient_id)
   end
 
   # def message_params
