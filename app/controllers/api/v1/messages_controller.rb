@@ -12,7 +12,8 @@ class Api::V1::MessagesController < ApplicationController
     @message = @conversation.messages.new(message_params)
     # @message.user = current_user
     if @message.save
-      render json: { message: MessageSerializer.new(@message) }, status: :created
+      # render json: { message: MessageSerializer.new(@message) }, status: :created
+      render json: @message
     end
   end
 
