@@ -15,17 +15,22 @@ class Api::V1::ConversationsController < ApplicationController
   end
 
   def custom
-    # byebug
-    find_conversation
-    # @message = @conversation.messages.new(message_params)
-    @message = Message.new(message_params)
-    # byebug
-    @message.conversation_id = @conversation.id
-    # @new_message = Message.create(message_params)
 
-    @message.save
-    # byebug
-    render json: @message
+    find_conversation
+
+    @message = Message.new(message_params)
+
+    @message.conversation_id = @conversation.id
+
+
+    if @message.save
+      serialized_data = ActiveModelSerializers::Adapter::Json.new(
+        MessageSerializer.new(@message)
+      ).serializable_hash
+      MessagesChannel.broadcast_to @conversation, serialized_data
+      head :ok
+    end
+    # render json: @message
   end
 
   def show
@@ -55,8 +60,15 @@ class Api::V1::ConversationsController < ApplicationController
     if Conversation.between(params.require(:message)[:sender_id], params.require(:message)[:recipient_id]).present?
       @conversation = Conversation.between(params.require(:message)[:sender_id], params.require(:message)[:recipient_id])[0]
     else
-      @conversation = Conversation.create!(sender_id: params[:message][:sender_id], recipient_id: params[:message][:recipient_id])
       # @conversation = Conversation.create!(sender_id: params[:message][:sender_id], recipient_id: params[:message][:recipient_id])
+      @conversation = Conversation.new(sender_id: params[:message][:sender_id], recipient_id: params[:message][:recipient_id])
+        if @conversation.save
+          serialized_data = ActiveModelSerializers::Adapter::Json.new(
+            ConversationSerializer.new(@conversation)
+          ).serializable_hash
+          ActionCable.server.broadcast 'conversations_channel', serialized_data
+          head :ok
+        end
     end
   end
 

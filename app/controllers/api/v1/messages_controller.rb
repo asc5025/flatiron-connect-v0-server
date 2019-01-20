@@ -10,10 +10,14 @@ class Api::V1::MessagesController < ApplicationController
 
   def create
     @message = @conversation.messages.new(message_params)
-    # @message.user = current_user
+
     if @message.save
-      # render json: { message: MessageSerializer.new(@message) }, status: :created
-      render json: @message
+      serialized_data = ActiveModelSerializers::Adapter::Json.new(
+        MessageSerializer.new(@message)
+      ).serializable_hash
+      MessagesChannel.broadcast_to @conversation, serialized_data
+      head :ok
+      # render json: @message
     end
   end
 
