@@ -13,7 +13,7 @@
 
 
 User.create(full_name: "Albert Chun", email: "alc@fs.com", password: "123", current_company: "Barbell Inc.", current_industry: "Health, Wellness and Fitness", current_position: "CEO", img_url: "https://i.imgur.com/h7BvZ39.png")
-User.create(full_name: "Jeff Hwang", email: "jeffh@fs.com", password: "123", current_company: "Flatiron Coffee", current_industry: "Food and Beverages", current_position: "Software Developer", img_url: "https://media.licdn.com/dms/image/C4D03AQFExQihn40nhg/profile-displayphoto-shrink_200_200/0?e=1548892800&v=beta&t=hb9NsfneEYOkOaxHzRpuGn3ZbA2Rk4iHCPr-Af7XY44")
+User.create(full_name: "Jeff Hwang", email: "jeffh@fs.com", password: "123", current_company: "Flatiron Coffee", current_industry: "Food and Beverages", current_position: "Software Developer", img_url: "https://i.imgur.com/adDxTPa.png")
 User.create(full_name: "Laura Snax", email: "laurak@fs.com", password: "123", current_company: "Cereal", current_industry: "Arts and Crafts", current_position: "Sr. Frontend Developer", img_url: "https://i.imgur.com/tN9lgIe.png")
 User.create(full_name: "Zach Vary", email: "zachv@fs.com", password: "123", current_company: "Flatiron Coffee", current_industry: "Food and Beverages", current_position: "Pry Master", img_url: "https://i.imgur.com/7n8PGYt.png")
 User.create(full_name: "Humzah Choudry", email: "humzahc@fs.com", password: "123", current_company: "Hot Sauce Inc.", current_industry: "Food and Beverages", current_position: "Algo Jedi", img_url: "https://i.imgur.com/mYrpdIs.png")
