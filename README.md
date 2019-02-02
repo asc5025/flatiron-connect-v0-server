@@ -1,9 +1,9 @@
 # README: Flatiron Connect Backend API
 
-The client repo can be found here: [client application](https://github.com/asc5025/flatiron-connect-v0-client)
+The client repo can be found here: [Flatiron Connect Frontend](https://github.com/asc5025/flatiron-connect-v0-client)
 
 ## Overview
-This Rails API provides authentication, the relational database and action cable implementation for the Flatiron Connect client. <br /> <br />
+This Rails API provides authentication, the relational database and action cable implementation for the client. <br /> <br />
 The backend server requires the following: <br />
 Rails version 5.2.2 <br />
 Ruby version 2.3.3 <br />
