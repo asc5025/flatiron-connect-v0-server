@@ -1,24 +1,18 @@
-# README
+# README: Flatiron Connect Backend API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The client repo can be found here: [pip](https://github.com/asc5025/flatiron-connect-v0-client)
 
-Things you may want to cover:
+## Overview
+This backend API that interacts with the Flatiron Connect client.
 
-* Ruby version
+## Installation
+Please follow details as API endpoint is specific to port: 3000
+Also, seed data is implemented.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+bundle install
+rake db:reset
+rake db:migrate
+rake db:seed
+rails s -p 3001
+```
