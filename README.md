@@ -6,7 +6,7 @@ The client repo can be found here: [pip](https://github.com/asc5025/flatiron-con
 This backend API that interacts with the Flatiron Connect client.
 
 ## Installation
-Please follow details as API endpoint is specific to port: 3000
+Please follow details as API endpoint is specific to port: 3000 <br />
 Also, seed data is implemented.
 
 ```bash
