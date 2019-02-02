@@ -1,6 +1,6 @@
 # README: Flatiron Connect Backend API
 
-The client repo can be found here: [pip](https://github.com/asc5025/flatiron-connect-v0-client)
+The client repo can be found here: [client application](https://github.com/asc5025/flatiron-connect-v0-client)
 
 ## Overview
 This backend API that interacts with the Flatiron Connect client. <br /> <br />
